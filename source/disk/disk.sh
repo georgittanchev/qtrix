@@ -27,5 +27,5 @@ else
 fi
 
 # Execute python script and pass along the info as variables:
-python3 "$DIR/source/disk/disk.py" "${df_info[*]}" "${df_info[8]}" "$root_dirs" "$backup_dirs" "$backup_conf" "$large_files_found" "$jb_status" "$admin_name" "$extended_disk_checks"
+python3 "$DIR/disk.py" "${df_info[*]}" "${df_info[8]}" "$root_dirs" "$backup_dirs" "$backup_conf" "$large_files_found" "$jb_status" "$admin_name" "$extended_disk_checks"
 
