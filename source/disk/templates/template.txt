@@ -10,9 +10,11 @@ I have reviewed the disk usage of the server and directories are allocating most
 
 [root_dirs]
 
-The home directory contains the files of websites and the cPanel account structure. The ‘var’ directory contains the mail server software and the databases. The ‘usr’ directory contains all of the server software files. [handle_if_backups]
+The home directory contains the files of websites and the cPanel account structure. The 'var' directory contains the mail server software and the databases. The 'usr' directory contains all of the server software files. [handle_if_backups]
 
 [if_files_found]
+
+[extended_disk_checks]
 
 In order to permanently resolve the issue I would suggest one of the following:
 

@@ -1,0 +1,13 @@
+===== EXTENDED DISK ANALYSIS =====
+
+The following information shows additional disk usage details that may be helpful in identifying disk space issues:
+
+[extended_disk_checks]
+
+These findings may help identify opportunities to free up disk space on the server.
+
+Recommendations:
+1. Review and clean up large log files if needed
+2. Check for unnecessary backups and old files that can be safely removed
+3. Look into large cache directories that can be cleared
+4. Review trash directories and remove any unnecessary files 

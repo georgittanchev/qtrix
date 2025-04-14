@@ -14,6 +14,7 @@ backup_conf = argv[5] # Retrieve backup configuration
 large_files_found = argv[6] # Largest files on the server
 jb_status = argv[7] # Detect if JB is present
 admin_name = argv[8] # The admin name that will appear in the ticket signature
+extended_disk_checks = argv[9] if len(argv) > 9 else "" # Extended disk checks from disk_usage_ext.sh
 my_path = path.abspath(path.dirname(__file__))
 
 # Retrieve the mini templates:
@@ -21,6 +22,7 @@ file1 = open(path.join(my_path, "templates/handle_if_backups.txt"), "r")
 file2 = open(path.join(my_path, "templates/if_large_files_found.txt"), "r")
 file3 = open(path.join(my_path, "templates/upgrade_recommend.txt"), "r")
 file4 = open(path.join(my_path, "templates/jb_template.txt"), "r")
+file5 = open(path.join(my_path, "templates/extended_disk_checks.txt"), "r")
 
 try:
     handle_if_backups = file1.read()
@@ -30,11 +32,13 @@ try:
     upgrade_disk_space = disk_spaces.index(min(disk_spaces, key=lambda x:abs(x-df_only_total_size)))+1
     upgrade_recommend = upgrade_recommend.replace("[upgrade_server]", f"{disk_spaces[upgrade_disk_space]}G")
     jb_template = file4.read()
+    extended_disk_checks_template = file5.read()
 finally:
     file1.close()
     file2.close()
     file3.close()
     file4.close()
+    file5.close()
 
 # Retrieve the main template and edit it accordingly:
 with open(path.join(my_path, "templates/template.txt")) as file:
@@ -60,6 +64,12 @@ with open(path.join(my_path, "templates/template.txt")) as file:
         complete_template = complete_template.replace("[jb_template]", "")
     else:
         complete_template = complete_template.replace("[jb_template]", jb_template)
+    # If extended disk checks were performed, add them to the template
+    if extended_disk_checks and extended_disk_checks.strip():
+        extended_disk_checks_template = extended_disk_checks_template.replace("[extended_disk_checks]", extended_disk_checks)
+        complete_template = complete_template.replace("[extended_disk_checks]", extended_disk_checks_template)
+    else:
+        complete_template = complete_template.replace("[extended_disk_checks]", "")
     complete_template = complete_template.replace("[admin_name]", admin_name)
 
 print(f"--- Template below --- \n\n {complete_template}")
