@@ -7,7 +7,18 @@ from os import path
 disk_spaces = [80, 160, 320, 640, 1280, 1920]
 df_info = argv[1].replace("Mounted on", "Mounted on\n") # df info
 df_only_total_size = argv[2] # Only server size from df
-df_only_total_size = int(df_only_total_size.replace('G', '')) # Remove G from server size
+
+# Handle both G and T units
+if 'T' in df_only_total_size:
+    # Convert terabytes to gigabytes
+    size_value = float(df_only_total_size.replace('T', ''))
+    df_only_total_size = int(size_value * 1024)  # 1TB = 1024GB
+elif 'G' in df_only_total_size:
+    df_only_total_size = int(df_only_total_size.replace('G', ''))
+else:
+    # Handle case where no unit is specified
+    df_only_total_size = int(df_only_total_size)
+
 root_dirs = argv[3] # Largest directories in /
 backup_dirs = argv[4] # All backup directories
 backup_conf = argv[5] # Retrieve backup configuration
